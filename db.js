@@ -1,9 +1,6 @@
 const { MongoClient } = require("mongodb");
-/*const uri =
-  "mongodb+srv://ropiemasta:06ZTDtucNPPfjo4y@ecobot.mx9rtvv.mongodb.net/Ark";
-*/
-const uri =
-  "mongodb+srv://ropiemasta:06ZTDtucNPPfjo4y@ecobot.mx9rtvv.mongodb.net/Ark";
+require("dotenv").config();
+const { MONGODB_SRV: uri } = process.env;
 
 let dbConnection;
 
@@ -16,6 +13,7 @@ module.exports = {
       })
       .catch((err) => {
         console.log(err);
+        console.log(uri);
         return cb(err);
       });
   },
