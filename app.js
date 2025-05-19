@@ -98,11 +98,11 @@ app.post(`/players/add/:id`, (req, res) => {
     });
 });
 
-// Testing adding each by itself
+/*/ Testing adding each by itself
 app.post(`/players/:id`, (req, res) => {
   const updates = req.body;
 
-  console.log(`User not found.  Adding to database`);
+  console.log(`Updating player information`);
   db.collection(playerData)
     .findOneAndUpdate(
       { implantid: req.params.id },
@@ -129,12 +129,50 @@ app.post(`/players/:id`, (req, res) => {
     )
     .then((result) => {
       res.status(200).json(result);
-      console.log("New player Information added");
+      console.log("Player Information Updated");
       console.log(updates);
     })
     .catch((err) => {
-      res.status(500).json({ error: `Could not add player` });
-      console.log("Error adding player information");
+      res.status(500).json({ error: `Could not update player` });
+      console.log("Error updating player information");
+      console.log(updates);
+    });
+});
+*/
+app.post(`/players/update/:id`, (req, res) => {
+  const updates = req.body;
+
+  console.log(`Updating player information`);
+  db.collection(playerData)
+    .findOneAndUpdate(
+      { implantid: req.params.id },
+      {
+        $set: {
+          charactername: req.body.charactername,
+          implantid: req.body.implantid,
+          charLevel: req.body.charLevel,
+          tribe: req.body.tribe,
+          gender: req.body.gender,
+          allnotes: req.body.allnotes,
+          bttse: req.body.bttse,
+          bttab: req.body.bttab,
+          bttext: req.body.bttext,
+          chibiLevel: req.body.chibiLevel,
+          bosses: req.body.bosses,
+          offline: req.body.offline,
+        },
+        $inc: { playTime: req.body.playTime },
+      },
+      { upsert: true, returnNewDocument: true }
+    )
+    .then((result) => {
+      res.status(200).json(result);
+      console.log("Player Information Updated");
+      console.log(updates);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: `Could not update player` });
+      console.log("Error updating player information");
       console.log(updates);
     });
 });

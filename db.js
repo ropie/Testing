@@ -9,6 +9,7 @@ module.exports = {
     MongoClient.connect(uri)
       .then((client) => {
         dbConnection = client.db();
+        console.log(`Connected to Dataase`);
         return cb();
       })
       .catch((err) => {
