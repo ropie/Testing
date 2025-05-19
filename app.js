@@ -3,6 +3,7 @@ const { connectToDb, getDb } = require(`./db.js`);
 const { ObjectId } = require("mongodb");
 const bodyParser = require("body-parser");
 const playerData = "PlayerData";
+const { PORT: PORT } = process.env;
 
 //init app and middlewear
 const app = express();
@@ -12,7 +13,7 @@ app.use(express.json());
 let db;
 connectToDb((err) => {
   if (!err) {
-    app.listen(3000, () => {
+    app.listen(PORT, () => {
       console.log("app lisening on port 3000");
     });
     db = getDb();
@@ -35,7 +36,7 @@ app.get(`/players/all`, (req, res) => {
     .catch(() => {
       res.status(500).json({ error: `Could not fetch the player list` });
     });
-}); 
+});
 
 //Get All Players and only show EOS and Implant ID
 app.get(`/players`, (req, res) => {
