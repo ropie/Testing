@@ -46,7 +46,7 @@ app.get(`/players`, (req, res) => {
     .collection(playerData)
     .find()
     .sort({ eosid: 1 })
-    .project({ eosid: 1, implantid: 1, _id: 0 })
+    .project({ eosid: 1, implantid: 1, subLevel: 1, _id: 0 })
     .forEach((player) => playerlist.push(player))
     .then(() => {
       res.status(200).json(playerlist);
